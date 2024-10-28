@@ -7,7 +7,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Database configuration
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -15,7 +14,6 @@ const db = mysql.createConnection({
     database: 'agrimercado'
 });
 
-// Connect to the database
 db.connect(err => {
     if (err) {
         console.error('Database connection error:', err);
@@ -24,7 +22,6 @@ db.connect(err => {
     }
 });
 
-// Sample route to get data
 app.get('/api/products', (req, res) => {
     db.query('SELECT * FROM products', (err, results) => {
         if (err) {
@@ -33,6 +30,10 @@ app.get('/api/products', (req, res) => {
             res.json(results);
         }
     });
+});
+
+app.get('/api/status', (req, res) => {
+    res.json({ message: 'Server is running and connected to the database' });
 });
 
 const PORT = 5000;
